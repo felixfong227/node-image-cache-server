@@ -1,0 +1,32 @@
+version: '3.3'
+
+services:
+  node:
+    image: node
+    volumes:
+        - ./:/app
+    working_dir: /app
+    expose: 
+        - 80
+    ports:
+        - "8080:80"
+    command: npm run docker::start
+    depends_on:
+      - redis
+    networks:
+      - redis-net
+    
+  redis:
+    image: redis:4.0.5-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: redis
+    volumes:
+      - redis-data:/data
+    networks:
+      - redis-net
+    
+volumes:
+  redis-data:
+    
+networks:
+  redis-net:
