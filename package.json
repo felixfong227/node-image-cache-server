@@ -1,0 +1,29 @@
+{
+  "name": "node-image-cache-server",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "redis": "^2.8.0",
+    "sharp": "^0.21.1"
+  },
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js",
+    "nodemon": "nodemon src/index.js",
+    "npm::rebuild": "npm rebuild",
+    "docker::start": "npm install && npm run nodemon"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  },
+  "author": "Felix Fong <felix@felixfong227.ml> (https://felixfong227.ml)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/felixfong227/node-image-cache-server"
+  },
+  "homepage": "https://github.com/felixfong227/node-image-cache-server",
+  "bugs": {
+    "url": "https://github.com/felixfong227/node-image-cache-server/issues"
+  }
+}
