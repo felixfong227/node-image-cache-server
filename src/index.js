@@ -37,7 +37,9 @@ const server = http.createServer((req, res) => {
             
             try {
                 
-                https.get(imageUrlPath, imageStream => {
+                const httpClient = imageUrlPath.startsWith('https') ? require('https') : require('http');
+                
+                httpClient.get(imageUrlPath, imageStream => {
                     let binary = [];
                     
                     imageStream.once('readable', () => {
