@@ -1,5 +1,4 @@
 const http = require('http');
-const https = require('https');
 const sharp = require('sharp');
 const redis = require('redis');
 const client = redis.createClient({
@@ -7,7 +6,10 @@ const client = redis.createClient({
 });
 
 const server = http.createServer((req, res) => {
-    
+    if(req.method !== 'GET') {
+        res.statusCode = 405;
+        return res.end('Method Not Allowed')
+    }
     const imageUrlPath = req.url.substr(1, req.url.length);
     
     // Look for the Redis cache
@@ -23,6 +25,7 @@ const server = http.createServer((req, res) => {
             // If there is a cache matching the remote resource, serve the cache to the client
             res.statusCode = 200;
             res.setHeader('X-Is-Cached', 'TRUE');
+            res.setHeader('Cache-Control', 'max-age=3600');
             const binary = Buffer.from(data, 'hex');
             sharp(binary).pipe(res);
         } else {
